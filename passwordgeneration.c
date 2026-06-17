@@ -19,7 +19,8 @@ int main()
     char characters[] =
     "0123456789"
     "abcdefghijklmnopqrstuvwxyz"
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "!@#$%^&*()-_=+[]{};:,.<>?/";
 
     int size = sizeof(characters) - 1;
 
