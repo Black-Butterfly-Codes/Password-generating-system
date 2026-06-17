@@ -13,22 +13,28 @@ int main()
     if(num <= 0)
     {
         printf("Invalid password length.\n");
-
+        return 1;
     }
 
-    char digits[] = "0123456789";
+    char characters[] =
+    "0123456789"
+    "abcdefghijklmnopqrstuvwxyz"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    int size = sizeof(characters) - 1;
+
     char password[num + 1];
 
     srand(time(NULL));
 
     for(int i = 0; i < num; i++)
     {
-        password[i] = digits[rand() % 10];
+        password[i] = characters[rand() % size];
     }
 
     password[num] = '\0';
 
-    printf("Generated Password: %s\n", password);
+    printf("\nGenerated Password: %s\n", password);
 
     return 0;
 }
