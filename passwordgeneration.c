@@ -18,7 +18,8 @@ int main()
         printf("2. View Saved Passwords\n");
         printf("3. Search Account\n");
         printf("4. Modify Password\n");
-        printf("5. Exit\n");
+        printf("5. Delete Password\n");
+        printf("6. Exit\n");
         printf("==================================\n");
         printf("Enter your choice: ");
 
@@ -82,31 +83,37 @@ int main()
                 break;
             }
 
-            case 2:
-            {
-                FILE *fp = fopen("passwords.txt", "r");
+           case 2:
+{
+    FILE *fp = fopen("passwords.txt", "r");
 
-                if(fp == NULL)
-                {
-                    printf("\nNo saved passwords found.\n");
-                    break;
-                }
+    if(fp == NULL)
+    {
+        printf("\nNo saved passwords found.\n");
+        break;
+    }
 
-                char line[200];
+    char line[200];
+    int count = 0;
 
-                printf("\n========== SAVED PASSWORDS ==========\n");
+    printf("\n========== SAVED PASSWORDS ==========\n");
 
-                while(fgets(line, sizeof(line), fp) != NULL)
-                {
-                    printf("%s", line);
-                }
+    while(fgets(line, sizeof(line), fp) != NULL)
+    {
+        printf("%s", line);
+        count++;
+    }
 
-                printf("=====================================\n");
+    if(count == 0)
+    {
+        printf("No saved passwords found.\n");
+    }
 
-                fclose(fp);
-                break;
-            }
+    printf("=====================================\n");
 
+    fclose(fp);
+    break;
+}
             case 3:
             {
                 FILE *fp = fopen("passwords.txt", "r");
@@ -227,6 +234,55 @@ int main()
 
             case 5:
             {
+                char search[50];
+                char line[200];
+                int found = 0;
+
+                printf("\nEnter account name to delete: ");
+                fgets(search, sizeof(search), stdin);
+                search[strcspn(search, "\n")] = '\0';
+
+                FILE *fp = fopen("passwords.txt", "r");
+                FILE *temp = fopen("temp.txt", "w");
+
+                if(fp == NULL || temp == NULL)
+                {
+                    printf("Error opening file.\n");
+                    break;
+                }
+
+                while(fgets(line, sizeof(line), fp) != NULL)
+                {
+                    if(strstr(line, search) != NULL)
+                    {
+                        found = 1;
+                        printf("\nDeleted Entry:\n%s", line);
+                        continue;
+                    }
+
+                    fputs(line, temp);
+                }
+
+                fclose(fp);
+                fclose(temp);
+
+                remove("passwords.txt");
+                rename("temp.txt", "passwords.txt");
+
+                if(found)
+                {
+                    printf("\nAccount deleted successfully!\n");
+                }
+                else
+                {
+                    printf("\nAccount not found.\n");
+                }
+
+                break;
+            }
+
+            case 6:
+            {
                 printf("\nThank you for using Password Manager.\n");
                 break;
             }
@@ -237,7 +293,7 @@ int main()
             }
         }
 
-    } while(choice != 5);
+    } while(choice != 6);
 
     return 0;
 }
