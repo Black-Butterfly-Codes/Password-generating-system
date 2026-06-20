@@ -7,6 +7,8 @@ int main()
 {
     int choice;
 
+    srand(time(NULL));
+
     do
     {
         printf("\n==================================\n");
@@ -14,10 +16,12 @@ int main()
         printf("==================================\n");
         printf("1. Create New Password\n");
         printf("2. View Saved Passwords\n");
-        printf("3. Exit\n");
-        printf("4. Search Account\n");
+        printf("3. Search Account\n");
+        printf("4. Modify Password\n");
+        printf("5. Exit\n");
         printf("==================================\n");
         printf("Enter your choice: ");
+
         scanf("%d", &choice);
         getchar();
 
@@ -51,8 +55,6 @@ int main()
                 int size = sizeof(characters) - 1;
 
                 char password[num + 1];
-
-                srand(time(NULL));
 
                 for(int i = 0; i < num; i++)
                 {
@@ -102,17 +104,10 @@ int main()
                 printf("=====================================\n");
 
                 fclose(fp);
-
                 break;
             }
 
             case 3:
-            {
-                printf("\nThank you for using Password Manager.\n");
-                break;
-            }
-
-            case 4:
             {
                 FILE *fp = fopen("passwords.txt", "r");
 
@@ -128,7 +123,6 @@ int main()
 
                 printf("\nEnter account name: ");
                 fgets(search, sizeof(search), stdin);
-
                 search[strcspn(search, "\n")] = '\0';
 
                 while(fgets(line, sizeof(line), fp) != NULL)
@@ -146,7 +140,94 @@ int main()
                 }
 
                 fclose(fp);
+                break;
+            }
 
+            case 4:
+            {
+                char search[50];
+                char line[200];
+                int found = 0;
+
+                printf("\nEnter account name to modify: ");
+                fgets(search, sizeof(search), stdin);
+                search[strcspn(search, "\n")] = '\0';
+
+                FILE *fp = fopen("passwords.txt", "r");
+                FILE *temp = fopen("temp.txt", "w");
+
+                if(fp == NULL || temp == NULL)
+                {
+                    printf("Error opening file.\n");
+                    break;
+                }
+
+                while(fgets(line, sizeof(line), fp) != NULL)
+                {
+                    if(strstr(line, search) != NULL)
+                    {
+                        found = 1;
+
+                        int num;
+
+                        printf("Enter new password length: ");
+                        scanf("%d", &num);
+                        getchar();
+
+                        if(num <= 0)
+                        {
+                            printf("Invalid password length.\n");
+                            continue;
+                        }
+
+                        char characters[] =
+                        "0123456789"
+                        "abcdefghijklmnopqrstuvwxyz"
+                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        "!@#$%^&*()-_=+[]{};:,.<>?/";
+
+                        int size = sizeof(characters) - 1;
+
+                        char password[num + 1];
+
+                        for(int i = 0; i < num; i++)
+                        {
+                            password[i] = characters[rand() % size];
+                        }
+
+                        password[num] = '\0';
+
+                        fprintf(temp, "%s | %s\n", search, password);
+
+                        printf("\nNew Password: %s\n", password);
+                    }
+                    else
+                    {
+                        fputs(line, temp);
+                    }
+                }
+
+                fclose(fp);
+                fclose(temp);
+
+                remove("passwords.txt");
+                rename("temp.txt", "passwords.txt");
+
+                if(found)
+                {
+                    printf("Password updated successfully!\n");
+                }
+                else
+                {
+                    printf("Account not found.\n");
+                }
+
+                break;
+            }
+
+            case 5:
+            {
+                printf("\nThank you for using Password Manager.\n");
                 break;
             }
 
@@ -156,7 +237,7 @@ int main()
             }
         }
 
-    } while(choice != 3);
+    } while(choice != 5);
 
     return 0;
 }
