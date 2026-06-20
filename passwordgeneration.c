@@ -15,6 +15,7 @@ int main()
         printf("1. Create New Password\n");
         printf("2. View Saved Passwords\n");
         printf("3. Exit\n");
+        printf("4. Search Account\n");
         printf("==================================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -69,6 +70,7 @@ int main()
                 }
 
                 fprintf(fp, "%s | %s\n", account, password);
+
                 fclose(fp);
 
                 printf("\nGenerated Password: %s\n", password);
@@ -100,12 +102,51 @@ int main()
                 printf("=====================================\n");
 
                 fclose(fp);
+
                 break;
             }
 
             case 3:
             {
                 printf("\nThank you for using Password Manager.\n");
+                break;
+            }
+
+            case 4:
+            {
+                FILE *fp = fopen("passwords.txt", "r");
+
+                if(fp == NULL)
+                {
+                    printf("\nNo saved passwords found.\n");
+                    break;
+                }
+
+                char search[50];
+                char line[200];
+                int found = 0;
+
+                printf("\nEnter account name: ");
+                fgets(search, sizeof(search), stdin);
+
+                search[strcspn(search, "\n")] = '\0';
+
+                while(fgets(line, sizeof(line), fp) != NULL)
+                {
+                    if(strstr(line, search) != NULL)
+                    {
+                        printf("\nFound:\n%s", line);
+                        found = 1;
+                    }
+                }
+
+                if(found == 0)
+                {
+                    printf("\nAccount not found.\n");
+                }
+
+                fclose(fp);
+
                 break;
             }
 
