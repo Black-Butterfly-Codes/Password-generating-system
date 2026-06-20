@@ -28,61 +28,82 @@ int main()
 
         switch(choice)
         {
-            case 1:
-            {
-                int num;
-                char account[50];
+           case 1:
+{
+    char account[50];
+    char password[200];
 
-                printf("\nEnter account name: ");
-                fgets(account, sizeof(account), stdin);
-                account[strcspn(account, "\n")] = '\0';
+    printf("\nEnter account name: ");
+    fgets(account, sizeof(account), stdin);
+    account[strcspn(account, "\n")] = '\0';
 
-                printf("Enter password length: ");
-                scanf("%d", &num);
-                getchar();
+    int createChoice;
 
-                if(num <= 0)
-                {
-                    printf("Invalid password length.\n");
-                    break;
-                }
+    printf("\n1. Generate Password\n");
+    printf("2. Enter Password Manually\n");
+    printf("Enter choice: ");
+    scanf("%d", &createChoice);
+    getchar();
 
-                char characters[] =
-                "0123456789"
-                "abcdefghijklmnopqrstuvwxyz"
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                "!@#$%^&*()-_=+[]{};:,.<>?/";
+    if(createChoice == 1)
+    {
+        int num;
 
-                int size = sizeof(characters) - 1;
+        printf("Enter password length: ");
+        scanf("%d", &num);
+        getchar();
 
-                char password[num + 1];
+        if(num <= 0)
+        {
+            printf("Invalid password length.\n");
+            break;
+        }
 
-                for(int i = 0; i < num; i++)
-                {
-                    password[i] = characters[rand() % size];
-                }
+        char characters[] =
+        "0123456789"
+        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "!@#$%^&*()-_=+[]{};:,.<>?/";
 
-                password[num] = '\0';
+        int size = sizeof(characters) - 1;
 
-                FILE *fp = fopen("passwords.txt", "a");
+        for(int i = 0; i < num; i++)
+        {
+            password[i] = characters[rand() % size];
+        }
 
-                if(fp == NULL)
-                {
-                    printf("Error opening file.\n");
-                    break;
-                }
+        password[num] = '\0';
+    }
+    else if(createChoice == 2)
+    {
+        printf("Enter password: ");
+        fgets(password, sizeof(password), stdin);
+        password[strcspn(password, "\n")] = '\0';
+    }
+    else
+    {
+        printf("Invalid choice.\n");
+        break;
+    }
 
-                fprintf(fp, "%s | %s\n", account, password);
+    FILE *fp = fopen("passwords.txt", "a");
 
-                fclose(fp);
+    if(fp == NULL)
+    {
+        printf("Error opening file.\n");
+        break;
+    }
 
-                printf("\nGenerated Password: %s\n", password);
-                printf("Assigned To: %s\n", account);
-                printf("Password saved successfully!\n");
+    fprintf(fp, "%s | %s\n", account, password);
 
-                break;
-            }
+    fclose(fp);
 
+    printf("\nPassword: %s\n", password);
+    printf("Assigned To: %s\n", account);
+    printf("Password saved successfully!\n");
+
+    break;
+}
            case 2:
 {
     FILE *fp = fopen("passwords.txt", "r");
@@ -150,88 +171,110 @@ int main()
                 break;
             }
 
-            case 4:
+          case 4:
+{
+    char search[50];
+    char line[200];
+    int found = 0;
+
+    printf("\nEnter account name to modify: ");
+    fgets(search, sizeof(search), stdin);
+    search[strcspn(search, "\n")] = '\0';
+
+    FILE *fp = fopen("passwords.txt", "r");
+    FILE *temp = fopen("temp.txt", "w");
+
+    if(fp == NULL || temp == NULL)
+    {
+        printf("Error opening file.\n");
+        break;
+    }
+
+    while(fgets(line, sizeof(line), fp) != NULL)
+    {
+        if(strstr(line, search) != NULL)
+        {
+            found = 1;
+
+            int modifyChoice;
+
+            printf("\n1. Generate New Password\n");
+            printf("2. Enter Password Manually\n");
+            printf("Enter choice: ");
+            scanf("%d", &modifyChoice);
+            getchar();
+
+            char password[200];
+
+            if(modifyChoice == 1)
             {
-                char search[50];
-                char line[200];
-                int found = 0;
+                int num;
 
-                printf("\nEnter account name to modify: ");
-                fgets(search, sizeof(search), stdin);
-                search[strcspn(search, "\n")] = '\0';
+                printf("Enter new password length: ");
+                scanf("%d", &num);
+                getchar();
 
-                FILE *fp = fopen("passwords.txt", "r");
-                FILE *temp = fopen("temp.txt", "w");
-
-                if(fp == NULL || temp == NULL)
+                if(num <= 0)
                 {
-                    printf("Error opening file.\n");
-                    break;
+                    printf("Invalid password length.\n");
+                    continue;
                 }
 
-                while(fgets(line, sizeof(line), fp) != NULL)
+                char characters[] =
+                "0123456789"
+                "abcdefghijklmnopqrstuvwxyz"
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                "!@#$%^&*()-_=+[]{};:,.<>?/";
+
+                int size = sizeof(characters) - 1;
+
+                for(int i = 0; i < num; i++)
                 {
-                    if(strstr(line, search) != NULL)
-                    {
-                        found = 1;
-
-                        int num;
-
-                        printf("Enter new password length: ");
-                        scanf("%d", &num);
-                        getchar();
-
-                        if(num <= 0)
-                        {
-                            printf("Invalid password length.\n");
-                            continue;
-                        }
-
-                        char characters[] =
-                        "0123456789"
-                        "abcdefghijklmnopqrstuvwxyz"
-                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                        "!@#$%^&*()-_=+[]{};:,.<>?/";
-
-                        int size = sizeof(characters) - 1;
-
-                        char password[num + 1];
-
-                        for(int i = 0; i < num; i++)
-                        {
-                            password[i] = characters[rand() % size];
-                        }
-
-                        password[num] = '\0';
-
-                        fprintf(temp, "%s | %s\n", search, password);
-
-                        printf("\nNew Password: %s\n", password);
-                    }
-                    else
-                    {
-                        fputs(line, temp);
-                    }
+                    password[i] = characters[rand() % size];
                 }
 
-                fclose(fp);
-                fclose(temp);
-
-                remove("passwords.txt");
-                rename("temp.txt", "passwords.txt");
-
-                if(found)
-                {
-                    printf("Password updated successfully!\n");
-                }
-                else
-                {
-                    printf("Account not found.\n");
-                }
-
-                break;
+                password[num] = '\0';
+            }
+            else if(modifyChoice == 2)
+            {
+                printf("Enter new password: ");
+                fgets(password, sizeof(password), stdin);
+                password[strcspn(password, "\n")] = '\0';
+            }
+            else
+            {
+                printf("Invalid choice.\n");
+                fputs(line, temp);
+                continue;
             }
 
+            fprintf(temp, "%s | %s\n", search, password);
+
+            printf("\nNew Password: %s\n", password);
+        }
+        else
+        {
+            fputs(line, temp);
+        }
+    }
+
+    fclose(fp);
+    fclose(temp);
+
+    remove("passwords.txt");
+    rename("temp.txt", "passwords.txt");
+
+    if(found)
+    {
+        printf("Password updated successfully!\n");
+    }
+    else
+    {
+        printf("Account not found.\n");
+    }
+
+    break;
+}
             case 5:
             {
                 char search[50];
