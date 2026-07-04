@@ -10,6 +10,7 @@ void searchAccount();
 void modifyPassword();
 void deletePassword();
 void checkPasswordStrength(char password[]);
+int duplicatePassword(char password[]);
 
 int main()
 {
@@ -126,9 +127,15 @@ void createPassword()
         return;
     }
 
-    printf("\nPassword : %s\n", password);
+   if(!duplicatePassword(password))
+{
+    printf("\nPassword was not saved.\n");
+    return;
+}
 
-    checkPasswordStrength(password);
+printf("\nGenerated Password: %s\n", password);
+
+checkPasswordStrength(password);
 
     FILE *fp = fopen("passwords.txt", "a");
 
@@ -142,7 +149,7 @@ void createPassword()
 
     fclose(fp);
 
-    printf("Assigned To : %s\n", account);
+    printf("\nAssigned To: %s\n", account);
     printf("Password saved successfully!\n");
 }
 void viewPasswords()
@@ -175,7 +182,6 @@ void viewPasswords()
 
     fclose(fp);
 }
-
 void searchAccount()
 {
     FILE *fp = fopen("passwords.txt", "r");
@@ -243,13 +249,14 @@ void modifyPassword()
             found = 1;
 
             int modifyChoice;
-            char password[200];
 
             printf("\n1. Generate New Password\n");
             printf("2. Enter Password Manually\n");
             printf("Enter choice: ");
             scanf("%d", &modifyChoice);
             getchar();
+
+            char password[200];
 
             if(modifyChoice == 1)
             {
@@ -294,9 +301,16 @@ void modifyPassword()
                 continue;
             }
 
-            printf("\nNew Password : %s\n", password);
+           if(!duplicatePassword(password))
+{
+    printf("\nPassword modification cancelled.\n");
+    fputs(line, temp);
+    continue;
+}
 
-            checkPasswordStrength(password);
+printf("\nNew Password: %s\n", password);
+
+checkPasswordStrength(password);
 
             fprintf(temp, "%s | %s\n", search, password);
         }
@@ -352,7 +366,10 @@ void deletePassword()
         if(strstr(line, search) != NULL)
         {
             found = 1;
-            printf("\nDeleted Entry:\n%s", line);
+
+            printf("\nDeleted Entry:\n");
+            printf("%s", line);
+
             continue;
         }
 
@@ -430,7 +447,7 @@ void checkPasswordStrength(char password[])
     printf("Numbers             : %s\n", digit ? "Yes" : "No");
     printf("Special Characters  : %s\n", special ? "Yes" : "No");
 
-    printf("-----------------------------------------\n");
+    printf("\n=========================================\n");
 
     if(score <= 2)
     {
@@ -473,4 +490,53 @@ void checkPasswordStrength(char password[])
         printf("- Excellent! Your password follows all recommended practices.\n");
 
     printf("=========================================\n");
+}
+int duplicatePassword(char password[])
+{
+    FILE *fp = fopen("passwords.txt", "r");
+
+    if(fp == NULL)
+    {
+        return 1;
+    }
+
+    char line[200];
+    char account[50];
+    char savedPassword[200];
+
+    while(fgets(line, sizeof(line), fp) != NULL)
+    {
+        sscanf(line, "%49[^|] | %199[^\n]", account, savedPassword);
+
+        if(strcmp(savedPassword, password) == 0)
+        {
+            fclose(fp);
+
+            int choice;
+
+            printf("\n=========================================\n");
+            printf("              WARNING!\n");
+            printf("=========================================\n");
+            printf("This password is already used by another account.\n\n");
+            printf("Do you still want to use it?\n");
+            printf("1. Yes\n");
+            printf("2. No\n");
+            printf("Enter your choice: ");
+
+            scanf("%d", &choice);
+            getchar();
+
+            if(choice == 1)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+    fclose(fp);
+    return 1;
 }
