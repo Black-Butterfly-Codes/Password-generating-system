@@ -48,7 +48,7 @@ The project is designed to strengthen practical understanding of:
 
 # ✨ Features
 
-### 🔑 Password Generation
+## 🔑 Password Generation
 
 Generate customizable passwords using:
 
@@ -61,7 +61,7 @@ The user can specify the desired password length.
 
 ---
 
-### 💾 Password Storage
+## 💾 Password Storage
 
 Password records can be stored locally in a text file.
 
@@ -69,26 +69,22 @@ The project uses local file handling in C to demonstrate persistent data storage
 
 ---
 
-### 👤 Account Management
+## 👤 Account Management
 
 The system provides a menu-driven interface for managing saved accounts.
 
-```text
-╔═════════════════════════════════════════╗
-║        ✦ PASSWORD MANAGER ✦             ║
-╠═════════════════════════════════════════╣
-║  1. 🔐 Create New Password               ║
-║  2. 📋 View All Saved Passwords           ║
-║  3. 🔎 Search Account                    ║
-║  4. ✏️  Modify Password                  ║
-║  5. 🗑️  Delete Password                  ║
-║  6. 🚪 Exit                              ║
-╚═════════════════════════════════════════╝
-```
+### Available Options
+
+1. 🔐 Create New Password
+2. 📋 View All Saved Passwords
+3. 🔎 Search Account
+4. ✏️ Modify Password
+5. 🗑️ Delete Password
+6. 🚪 Exit
 
 ---
 
-### 🔎 Search Accounts
+## 🔎 Search Accounts
 
 Search saved account entries by account name.
 
@@ -96,19 +92,19 @@ This makes it easier to locate a specific saved credential without manually chec
 
 ---
 
-### ✏️ Modify Password
+## ✏️ Modify Password
 
 Existing password entries can be modified through the account-management workflow.
 
 ---
 
-### 🗑️ Delete Password
+## 🗑️ Delete Password
 
 Individual saved entries can be removed from the local password database.
 
 ---
 
-### 🛡️ Password Strength Checker
+## 🛡️ Password Strength Checker
 
 The project evaluates password characteristics such as:
 
@@ -118,25 +114,18 @@ The project evaluates password characteristics such as:
 * Numbers
 * Special characters
 
-Example:
+### Example Strength Result
 
-```text
-╔══════════════════════════════════════╗
-║      ✦ PASSWORD STRENGTH CHECK ✦     ║
-╠══════════════════════════════════════╣
-║ Length        ✓                      ║
-║ Uppercase     ✓                      ║
-║ Lowercase     ✓                      ║
-║ Number        ✓                      ║
-║ Special       ✓                      ║
-║                                      ║
-║ Strength: STRONG                     ║
-╚══════════════════════════════════════╝
-```
+* ✅ Length requirement satisfied
+* ✅ Uppercase character included
+* ✅ Lowercase character included
+* ✅ Number included
+* ✅ Special character included
+* 🌟 Strength: **STRONG**
 
 ---
 
-### 🚫 Duplicate Protection
+## 🚫 Duplicate Protection
 
 The system is designed to detect:
 
@@ -149,40 +138,16 @@ This helps prevent accidental duplicate records.
 
 # 🧠 How It Works
 
-The overall workflow is:
+The overall workflow follows these steps:
 
-```text
-                 ╔═══════════════════╗
-                 ║      START        ║
-                 ╚═════════╤═════════╝
-                           │
-                           ▼
-                 ╔═══════════════════╗
-                 ║   Display Menu    ║
-                 ╚═════════╤═════════╝
-                           │
-             ┌─────────────┼─────────────┐
-             │             │             │
-             ▼             ▼             ▼
-        Create          Search         Manage
-        Password        Account        Password
-             │             │             │
-             ▼             ▼             ▼
-        Generate /      Find Entry    Modify /
-        Manual Entry                  Delete
-             │
-             ▼
-       Strength Check
-             │
-             ▼
-       Duplicate Check
-             │
-             ▼
-        Save Entry
-             │
-             ▼
-       Return to Menu
-```
+1. ▶️ Start the application
+2. 📋 Display the main menu
+3. 🔐 Create, search, or manage a password
+4. 🎲 Generate a password or enter one manually
+5. 🛡️ Check password strength
+6. 🚫 Check for duplicates
+7. 💾 Save the entry
+8. 🔁 Return to the main menu
 
 ---
 
@@ -190,22 +155,30 @@ The overall workflow is:
 
 The generator combines multiple character categories to create customizable passwords.
 
-### Character Categories
+## Character Categories
+
+### 🔢 Numbers
 
 ```text
-╭────────────────────────────────────╮
-│ NUMBERS                            │
-│ 0123456789                         │
-├────────────────────────────────────┤
-│ LOWERCASE                          │
-│ abcdefghijklmnopqrstuvwxyz         │
-├────────────────────────────────────┤
-│ UPPERCASE                          │
-│ ABCDEFGHIJKLMNOPQRSTUVWXYZ         │
-├────────────────────────────────────┤
-│ SPECIAL CHARACTERS                 │
-│ !@#$%^&*()-_=+[]{};:,.<>?/         │
-╰────────────────────────────────────╯
+0123456789
+```
+
+### 🔤 Lowercase Letters
+
+```text
+abcdefghijklmnopqrstuvwxyz
+```
+
+### 🔠 Uppercase Letters
+
+```text
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+```
+
+### 🔣 Special Characters
+
+```text
+!@#$%^&*()-_=+[]{};:,.<>?/
 ```
 
 The user can choose the password length before generation.
@@ -215,16 +188,14 @@ The user can choose the password length before generation.
 # 🧪 Example Workflow
 
 ```text
-╔════════════════════════════════════════╗
-║     ✦ PASSWORD GENERATING SYSTEM ✦     ║
-╠════════════════════════════════════════╣
-║ 1. Create New Password                 ║
-║ 2. View All Saved Passwords             ║
-║ 3. Search Account                      ║
-║ 4. Modify Password                     ║
-║ 5. Delete Password                     ║
-║ 6. Exit                                ║
-╚════════════════════════════════════════╝
+✦ PASSWORD GENERATING SYSTEM ✦
+
+1. Create New Password
+2. View All Saved Passwords
+3. Search Account
+4. Modify Password
+5. Delete Password
+6. Exit
 
 Enter choice: 1
 
@@ -251,22 +222,22 @@ The project is organized around separate functions for the major operations.
 
 ```text
 main()
- │
- ├── createPassword()
- │      ├── Generate password
- │      ├── Manual password
- │      ├── Duplicate check
- │      └── Strength check
- │
- ├── viewPasswords()
- │
- ├── searchAccount()
- │
- ├── modifyPassword()
- │
- ├── deletePassword()
- │
- └── checkPasswordStrength()
+│
+├── createPassword()
+│   ├── Generate password
+│   ├── Manual password
+│   ├── Duplicate check
+│   └── Strength check
+│
+├── viewPasswords()
+│
+├── searchAccount()
+│
+├── modifyPassword()
+│
+├── deletePassword()
+│
+└── checkPasswordStrength()
 ```
 
 This structure makes the program easier to understand, maintain, and expand.
@@ -308,11 +279,8 @@ This structure makes the program easier to understand, maintain, and expand.
 Password-generating-system/
 │
 ├── 📄 passwordgeneration.c
-│
 ├── 📄 passwords.txt
-│
 ├── 📄 README.md
-│
 └── 📄 .gitignore
 ```
 
@@ -373,19 +341,19 @@ gcc passwordgeneration.c -o passwordgeneration
 
 This project explores several introductory password-security concepts.
 
-### Password Length
+## Password Length
 
 Longer passwords generally provide a larger search space.
 
-### Character Diversity
+## Character Diversity
 
 Using multiple character classes increases the possible combinations.
 
-### Password Reuse
+## Password Reuse
 
 The project includes duplicate-password checking to demonstrate why reusing passwords can be problematic.
 
-### Password Strength
+## Password Strength
 
 The strength checker demonstrates how different password characteristics contribute to password quality.
 
@@ -415,29 +383,31 @@ This project is intended for learning C programming and cybersecurity concepts.
 
 # 🚀 Future Improvements
 
-```text
-[x] Random password generation
-[x] Custom password length
-[x] Uppercase / lowercase support
-[x] Numbers
-[x] Special characters
-[x] Account management
-[x] Search functionality
-[x] Modify functionality
-[x] Delete functionality
-[x] Password strength checking
-[x] Duplicate detection
+## Completed Features
 
-[ ] Improve secure random generation
-[ ] Encrypt stored credentials
-[ ] Add master-password authentication
-[ ] Improve data validation
-[ ] Add better error handling
-[ ] Add password entropy estimation
-[ ] Improve terminal UI
-[ ] Add automated tests
-[ ] Add project documentation
-```
+* [x] Random password generation
+* [x] Custom password length
+* [x] Uppercase and lowercase support
+* [x] Numbers
+* [x] Special characters
+* [x] Account management
+* [x] Search functionality
+* [x] Modify functionality
+* [x] Delete functionality
+* [x] Password strength checking
+* [x] Duplicate detection
+
+## Planned Improvements
+
+* [ ] Improve secure random generation
+* [ ] Encrypt stored credentials
+* [ ] Add master-password authentication
+* [ ] Improve data validation
+* [ ] Add better error handling
+* [ ] Add password entropy estimation
+* [ ] Improve terminal UI
+* [ ] Add automated tests
+* [ ] Add project documentation
 
 ---
 
@@ -464,32 +434,16 @@ Building this project helped me practice:
 
 # 📈 Project Evolution
 
-```text
-        SIMPLE GENERATOR
-               │
-               ▼
-       Custom Password Length
-               │
-               ▼
-      Character Diversity
-               │
-               ▼
-       Password Strength
-               │
-               ▼
-       Account Management
-               │
-        ┌──────┼──────┐
-        ▼      ▼      ▼
-      Search Modify Delete
-        │      │      │
-        └──────┼──────┘
-               ▼
-       Duplicate Detection
-               │
-               ▼
-       PASSWORD MANAGER
-```
+The project developed through the following stages:
+
+1. **Simple Password Generator**
+2. **Custom Password Length**
+3. **Character Diversity**
+4. **Password Strength Checking**
+5. **Account Management**
+6. **Search, Modify, and Delete Features**
+7. **Duplicate Detection**
+8. **Local Password Manager**
 
 ---
 
@@ -513,13 +467,13 @@ Building this project helped me practice:
 
 # 🔗 Project Links
 
-### 👤 GitHub Profile
+## 👤 GitHub Profile
 
-[Black-Butterfly-Codes](https://github.com/Black-Butterfly-Codes?utm_source=chatgpt.com)
+[Black-Butterfly-Codes](https://github.com/Black-Butterfly-Codes)
 
-### 🔐 Password Generating System
+## 🔐 Password Generating System
 
-[Password-generating-system](https://github.com/Black-Butterfly-Codes/Password-generating-system?utm_source=chatgpt.com)
+[Password-generating-system](https://github.com/Black-Butterfly-Codes/Password-generating-system)
 
 ---
 
@@ -527,11 +481,11 @@ Building this project helped me practice:
 
 If you find this project useful or interesting:
 
-⭐ Star the repository
-🐛 Report bugs
-💡 Suggest improvements
-📚 Learn from the source code
-🔐 Explore cybersecurity responsibly
+* ⭐ Star the repository
+* 🐛 Report bugs
+* 💡 Suggest improvements
+* 📚 Learn from the source code
+* 🔐 Explore cybersecurity responsibly
 
 ---
 
@@ -546,5 +500,3 @@ If you find this project useful or interesting:
 🦋 <b>Black-Butterfly-Codes</b>
 
 </p>
-
-
